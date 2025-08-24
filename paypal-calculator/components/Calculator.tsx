@@ -66,17 +66,60 @@ export default function Calculator() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-background to-secondary/20">
       <div className="container mx-auto px-4 py-8 max-w-6xl">
-        {/* Header */}
-        <header className="flex justify-between items-center mb-8">
-          <div>
-            <h1 className="text-4xl font-bold bg-gradient-to-r from-primary to-blue-600 bg-clip-text text-transparent">
-              PayPal Fee Calculator
-            </h1>
-            <p className="text-muted-foreground mt-2">
-              Calculate PayPal fees instantly and find out how much to request
-            </p>
+        {/* Header Banner */}
+        <header className="relative mb-8 overflow-hidden">
+          <div className="absolute inset-0 bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 opacity-90 rounded-xl" />
+          <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent rounded-xl" />
+          <div className="absolute -inset-1 bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 rounded-xl blur-xl opacity-50 animate-pulse" />
+          
+          <div className="relative bg-gradient-to-r from-blue-600/95 via-indigo-600/95 to-purple-600/95 rounded-xl shadow-2xl backdrop-blur-sm border border-white/10">
+            <div className="absolute top-0 left-0 w-full h-full opacity-10">
+              <div className="absolute top-0 left-0 w-24 h-24 bg-white rounded-full blur-3xl animate-pulse" />
+              <div className="absolute bottom-0 right-0 w-32 h-32 bg-white rounded-full blur-3xl animate-pulse delay-700" />
+            </div>
+            
+            <div className="relative px-6 py-6 md:px-10 md:py-8">
+              <div className="flex justify-between items-center">
+                <div className="flex-1">
+                  <div className="flex items-center gap-4">
+                    <div className="w-10 h-10 bg-white/20 backdrop-blur-sm rounded-lg flex items-center justify-center border border-white/30">
+                      <svg className="w-6 h-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                      </svg>
+                    </div>
+                    
+                    <div>
+                      <h1 className="text-3xl md:text-4xl font-bold text-white tracking-tight">
+                        PayPal Fee <span className="text-transparent bg-clip-text bg-gradient-to-r from-yellow-300 to-orange-300">Calculator</span>
+                      </h1>
+                      <p className="text-white/80 text-sm md:text-base mt-1">
+                        Calculate fees instantly and find out exactly how much to request
+                      </p>
+                    </div>
+                  </div>
+                  
+                  <div className="flex flex-wrap gap-3 mt-4">
+                    <div className="flex items-center gap-1.5">
+                      <div className="w-1.5 h-1.5 bg-green-400 rounded-full animate-pulse" />
+                      <span className="text-white/70 text-xs">Real-time</span>
+                    </div>
+                    <div className="flex items-center gap-1.5">
+                      <div className="w-1.5 h-1.5 bg-green-400 rounded-full animate-pulse" />
+                      <span className="text-white/70 text-xs">Multi-currency</span>
+                    </div>
+                    <div className="flex items-center gap-1.5">
+                      <div className="w-1.5 h-1.5 bg-green-400 rounded-full animate-pulse" />
+                      <span className="text-white/70 text-xs">Batch Processing</span>
+                    </div>
+                  </div>
+                </div>
+                
+                <div className="ml-4">
+                  <ThemeToggle />
+                </div>
+              </div>
+            </div>
           </div>
-          <ThemeToggle />
         </header>
 
         <div className="grid lg:grid-cols-2 gap-8">
