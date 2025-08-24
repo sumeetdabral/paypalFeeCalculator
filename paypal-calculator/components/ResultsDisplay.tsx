@@ -45,28 +45,67 @@ export default function ResultsDisplay({ calculation, currencySymbol }: ResultsD
             </span>
           </div>
 
-          {/* You Receive */}
-          <div className="flex justify-between items-center py-3 bg-green-100/50 dark:bg-green-950/30 rounded-lg px-4">
-            <span className="font-medium text-gray-800 dark:text-gray-200">You Receive</span>
-            <div className="flex items-center gap-2">
-              <span className="text-2xl font-bold text-black dark:text-green-400">
-                {formatCurrency(calculation.netAmount, currencySymbol)}
-              </span>
-              <button
-                onClick={() => copyToClipboard(calculation.netAmount, 'receive')}
-                className="p-1.5 rounded hover:bg-secondary/50 transition-colors"
-                title="Copy amount"
-              >
-                {copiedField === 'receive' ? (
-                  <svg className="w-5 h-5 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                  </svg>
-                ) : (
-                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
-                  </svg>
-                )}
-              </button>
+          {/* You Receive - Modern Design */}
+          <div className="relative overflow-hidden rounded-xl mt-6">
+            {/* Animated gradient background */}
+            <div className="absolute inset-0 bg-gradient-to-r from-emerald-500 via-green-500 to-teal-500 opacity-90 animate-gradient" />
+            <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent" />
+            
+            {/* Floating orbs for visual interest */}
+            <div className="absolute -top-4 -right-4 w-24 h-24 bg-white/20 rounded-full blur-2xl animate-pulse" />
+            <div className="absolute -bottom-4 -left-4 w-32 h-32 bg-white/10 rounded-full blur-3xl animate-pulse delay-700" />
+            
+            {/* Content */}
+            <div className="relative bg-gradient-to-r from-emerald-500/95 via-green-500/95 to-teal-500/95 backdrop-blur-sm p-6">
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-3">
+                  <div className="w-10 h-10 bg-white/25 backdrop-blur rounded-lg flex items-center justify-center">
+                    <svg className="w-6 h-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                  </div>
+                  <div>
+                    <p className="text-white/90 text-sm font-medium">You Receive</p>
+                    <p className="text-white/70 text-xs">After PayPal fees</p>
+                  </div>
+                </div>
+                
+                <div className="flex items-center gap-3">
+                  <div className="text-right">
+                    <div className="text-3xl font-bold text-white tracking-tight">
+                      {formatCurrency(calculation.netAmount, currencySymbol)}
+                    </div>
+                    <div className="text-white/70 text-xs mt-1">
+                      {((calculation.netAmount / calculation.originalAmount) * 100).toFixed(1)}% of original
+                    </div>
+                  </div>
+                  
+                  <button
+                    onClick={() => copyToClipboard(calculation.netAmount, 'receive')}
+                    className="group relative p-3 bg-white/20 backdrop-blur rounded-lg hover:bg-white/30 transition-all duration-200 border border-white/30"
+                    title="Copy amount"
+                  >
+                    <div className="absolute inset-0 bg-white/0 group-hover:bg-white/10 rounded-lg transition-colors" />
+                    {copiedField === 'receive' ? (
+                      <svg className="w-5 h-5 text-white relative z-10" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                      </svg>
+                    ) : (
+                      <svg className="w-5 h-5 text-white relative z-10" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+                      </svg>
+                    )}
+                  </button>
+                </div>
+              </div>
+              
+              {/* Progress bar showing fee impact */}
+              <div className="mt-4 bg-white/20 backdrop-blur rounded-full h-2 overflow-hidden">
+                <div 
+                  className="h-full bg-white/90 rounded-full transition-all duration-1000 ease-out"
+                  style={{ width: `${(calculation.netAmount / calculation.originalAmount) * 100}%` }}
+                />
+              </div>
             </div>
           </div>
         </div>
