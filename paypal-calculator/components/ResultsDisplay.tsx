@@ -1,20 +1,33 @@
 'use client';
 
 import { useState } from 'react';
+import { useRouter } from 'next/navigation';
 import { formatCurrency, type FeeCalculation } from '@/lib/calculations';
 
 interface ResultsDisplayProps {
   calculation: FeeCalculation;
   currencySymbol: string;
+  currency?: string;
+  transactionType?: string;
 }
 
-export default function ResultsDisplay({ calculation, currencySymbol }: ResultsDisplayProps) {
+export default function ResultsDisplay({ calculation, currencySymbol, currency = 'USD', transactionType }: ResultsDisplayProps) {
   const [copiedField, setCopiedField] = useState<string | null>(null);
+  const router = useRouter();
 
   const copyToClipboard = (value: number, field: string) => {
     navigator.clipboard.writeText(value.toFixed(2));
     setCopiedField(field);
     setTimeout(() => setCopiedField(null), 2000);
+  };
+
+  const handleCreateInvoice = () => {
+    const params = new URLSearchParams({
+      amount: calculation.originalAmount.toString(),
+      currency: currency,
+      transactionType: transactionType || 'domestic'
+    });
+    router.push(`/invoices?create=true&${params.toString()}`);
   };
 
   return (
@@ -108,6 +121,19 @@ export default function ResultsDisplay({ calculation, currencySymbol }: ResultsD
               </div>
             </div>
           </div>
+        </div>
+        
+        {/* Create Invoice Button */}
+        <div className="mt-4">
+          <button
+            onClick={handleCreateInvoice}
+            className="w-full px-4 py-3 bg-gradient-to-r from-indigo-600 to-purple-600 text-white rounded-lg hover:from-indigo-700 hover:to-purple-700 transition-all duration-200 flex items-center justify-center gap-2 font-medium shadow-lg"
+          >
+            <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+            </svg>
+            Create Invoice for {formatCurrency(calculation.originalAmount, currencySymbol)}
+          </button>
         </div>
       </div>
 
