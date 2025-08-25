@@ -1,7 +1,7 @@
 import jsPDF from 'jspdf';
 import autoTable from 'jspdf-autotable';
 import { Invoice } from './invoice-types';
-import { CompanySettings } from './company-settings';
+import { CompanySettings, formatCompanyAddress } from './company-settings';
 import { format } from 'date-fns';
 import { CURRENCIES } from './constants';
 
@@ -12,9 +12,9 @@ export function generateInvoicePDF(invoice: Invoice, companyInfo?: CompanySettin
   const margin = 20;
   let yPosition = margin;
 
-  const primaryColor = [37, 99, 235];
-  const textColor = [31, 41, 55];
-  const lightGray = [243, 244, 246];
+  const primaryColor: [number, number, number] = [37, 99, 235];
+  const textColor: [number, number, number] = [31, 41, 55];
+  const lightGray: [number, number, number] = [243, 244, 246];
   
   const currencySymbol = CURRENCIES[invoice.currency as keyof typeof CURRENCIES]?.symbol || '$';
 
@@ -47,7 +47,8 @@ export function generateInvoicePDF(invoice: Invoice, companyInfo?: CompanySettin
     yPosition += 5;
   }
   if (companyInfo?.address) {
-    const addressLines = companyInfo.address.split('\n');
+    const formattedAddress = formatCompanyAddress(companyInfo.address);
+    const addressLines = formattedAddress.split('\n');
     addressLines.forEach(line => {
       doc.text(line, pageWidth - margin, yPosition + 10, { align: 'right' });
       yPosition += 5;
@@ -66,7 +67,7 @@ export function generateInvoicePDF(invoice: Invoice, companyInfo?: CompanySettin
   doc.setTextColor(...primaryColor);
   doc.text('INVOICE', margin, yPosition);
   
-  const statusColors: Record<Invoice['status'], number[]> = {
+  const statusColors: Record<Invoice['status'], [number, number, number]> = {
     draft: [107, 114, 128],
     sent: [59, 130, 246],
     paid: [34, 197, 94],
@@ -179,7 +180,8 @@ export function generateInvoicePDF(invoice: Invoice, companyInfo?: CompanySettin
     margin: { left: margin, right: margin },
   });
 
-  yPosition = (doc as any).lastAutoTable?.finalY + 10 || yPosition;
+  const extendedDoc = doc as jsPDF & { lastAutoTable?: { finalY: number } };
+  yPosition = (extendedDoc.lastAutoTable?.finalY ?? yPosition - 10) + 10;
 
   const summaryX = pageWidth - margin - 80;
   const summaryItems: Array<[string, string, boolean?]> = [

@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react';
 import { Invoice, getInvoiceStatusColor, isInvoiceOverdue } from '@/lib/invoice-types';
 import { InvoiceStorage } from '@/lib/invoice-storage';
-import { CompanySettingsStorage, formatCompanyAddress } from '@/lib/company-settings';
+import { CompanySettingsStorage } from '@/lib/company-settings';
 import { format } from 'date-fns';
 import { CURRENCIES } from '@/lib/constants';
 import { downloadInvoicePDF } from '@/lib/invoice-pdf';
@@ -53,7 +53,7 @@ export default function InvoiceList() {
       name: companyInfo.name,
       email: companyInfo.email,
       phone: companyInfo.phone,
-      address: formatCompanyAddress(companyInfo.address),
+      address: companyInfo.address,
       logo: companyInfo.logo
     });
   };
@@ -109,7 +109,7 @@ export default function InvoiceList() {
               <p className="text-sm text-muted-foreground">Total Invoices</p>
               <p className="text-2xl font-bold">{stats.totalInvoices}</p>
             </div>
-            <div className="p-3 rounded-lg" style={{backgroundColor: 'var(--blue-600)', '--blue-600': '#2563eb'}}>
+            <div className="p-3 rounded-lg" style={{backgroundColor: '#2563eb'}}>
               <svg className="w-6 h-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
               </svg>
@@ -123,7 +123,7 @@ export default function InvoiceList() {
               <p className="text-sm text-muted-foreground">Total Amount</p>
               <p className="text-2xl font-bold">${stats.totalAmount.toFixed(2)}</p>
             </div>
-            <div className="p-3 rounded-lg" style={{backgroundColor: 'var(--purple-600)', '--purple-600': '#9333ea'}}>
+            <div className="p-3 rounded-lg" style={{backgroundColor: '#9333ea'}}>
               <svg className="w-6 h-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
               </svg>
@@ -137,7 +137,7 @@ export default function InvoiceList() {
               <p className="text-sm text-muted-foreground">Paid</p>
               <p className="text-2xl font-bold text-green-600 dark:text-green-400">${stats.paidAmount.toFixed(2)}</p>
             </div>
-            <div className="p-3 rounded-lg" style={{backgroundColor: 'var(--green-600)', '--green-600': '#16a34a'}}>
+            <div className="p-3 rounded-lg" style={{backgroundColor: '#16a34a'}}>
               <svg className="w-6 h-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
               </svg>
@@ -151,7 +151,7 @@ export default function InvoiceList() {
               <p className="text-sm text-muted-foreground">Overdue</p>
               <p className="text-2xl font-bold text-red-600 dark:text-red-400">${stats.overdueAmount.toFixed(2)}</p>
             </div>
-            <div className="p-3 rounded-lg" style={{backgroundColor: 'var(--red-600)', '--red-600': '#dc2626'}}>
+            <div className="p-3 rounded-lg" style={{backgroundColor: '#dc2626'}}>
               <svg className="w-6 h-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
               </svg>

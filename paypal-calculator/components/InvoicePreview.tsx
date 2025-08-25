@@ -1,7 +1,7 @@
 'use client';
 
 import { Invoice, getInvoiceStatusColor } from '@/lib/invoice-types';
-import { CompanySettings, CompanySettingsStorage, formatCompanyAddress } from '@/lib/company-settings';
+import { CompanySettings, CompanySettingsStorage } from '@/lib/company-settings';
 import { format } from 'date-fns';
 import { CURRENCIES } from '@/lib/constants';
 import { downloadInvoicePDF } from '@/lib/invoice-pdf';
@@ -30,7 +30,7 @@ export default function InvoicePreview({ invoice, companyInfo }: InvoicePreviewP
       name: currentCompanyInfo.name,
       email: currentCompanyInfo.email,
       phone: currentCompanyInfo.phone,
-      address: formatCompanyAddress(currentCompanyInfo.address),
+      address: currentCompanyInfo.address,
       logo: currentCompanyInfo.logo
     });
   };

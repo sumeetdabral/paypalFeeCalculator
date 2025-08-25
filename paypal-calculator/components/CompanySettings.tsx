@@ -22,8 +22,6 @@ export default function CompanySettings({ onSave, onCancel }: CompanySettingsPro
   const handleLogoUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
     if (file) {
-      setLogoFile(file);
-      
       // Convert to base64 for preview and storage
       const reader = new FileReader();
       reader.onload = (e) => {
@@ -36,7 +34,6 @@ export default function CompanySettings({ onSave, onCancel }: CompanySettingsPro
   };
 
   const handleRemoveLogo = () => {
-    setLogoFile(null);
     setLogoPreview('');
     setSettings(prev => ({ ...prev, logo: '' }));
   };
@@ -52,7 +49,6 @@ export default function CompanySettings({ onSave, onCancel }: CompanySettingsPro
     const defaultSettings = CompanySettingsStorage.resetToDefaults();
     setSettings(defaultSettings);
     setLogoPreview('');
-    setLogoFile(null);
   };
 
   return (

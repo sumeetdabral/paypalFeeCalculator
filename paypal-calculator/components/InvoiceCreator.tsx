@@ -80,8 +80,8 @@ export default function InvoiceCreator({
           
           if (field === 'quantity' || field === 'rate') {
             updatedItem.amount = calculateItemAmount(
-              field === 'quantity' ? value : item.quantity,
-              field === 'rate' ? value : item.rate
+              field === 'quantity' ? Number(value) : item.quantity,
+              field === 'rate' ? Number(value) : item.rate
             );
           }
           
