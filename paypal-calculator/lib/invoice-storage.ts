@@ -1,5 +1,14 @@
 import { Invoice, InvoiceStats } from './invoice-types';
 
+// Interface for invoice data as stored in JSON (dates as strings)
+interface StoredInvoice extends Omit<Invoice, 'issueDate' | 'dueDate' | 'createdAt' | 'updatedAt' | 'paidAt'> {
+  issueDate: string;
+  dueDate: string;
+  createdAt: string;
+  updatedAt: string;
+  paidAt?: string;
+}
+
 const STORAGE_KEY = 'paypal-calculator-invoices';
 const INVOICE_COUNTER_KEY = 'paypal-calculator-invoice-counter';
 
@@ -12,7 +21,7 @@ export class InvoiceStorage {
     
     try {
       const invoices = JSON.parse(stored);
-      return invoices.map((inv: any) => ({
+      return invoices.map((inv: StoredInvoice) => ({
         ...inv,
         issueDate: new Date(inv.issueDate),
         dueDate: new Date(inv.dueDate),
@@ -210,7 +219,7 @@ export class InvoiceStorage {
         throw new Error('Invalid invoice data format');
       }
       
-      const validInvoices = invoices.map((inv: any) => ({
+      const validInvoices = invoices.map((inv: StoredInvoice) => ({
         ...inv,
         issueDate: new Date(inv.issueDate),
         dueDate: new Date(inv.dueDate),

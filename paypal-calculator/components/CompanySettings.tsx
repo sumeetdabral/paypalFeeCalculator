@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import Image from 'next/image';
 import { CompanySettings as CompanySettingsType, CompanySettingsStorage } from '@/lib/company-settings';
 
 interface CompanySettingsProps {
@@ -10,7 +11,6 @@ interface CompanySettingsProps {
 
 export default function CompanySettings({ onSave, onCancel }: CompanySettingsProps) {
   const [settings, setSettings] = useState<CompanySettingsType>(CompanySettingsStorage.getSettings());
-  const [logoFile, setLogoFile] = useState<File | null>(null);
   const [logoPreview, setLogoPreview] = useState<string>('');
 
   useEffect(() => {
@@ -76,7 +76,7 @@ export default function CompanySettings({ onSave, onCancel }: CompanySettingsPro
           <div className="flex items-start gap-4">
             <div className="w-32 h-32 border-2 border-dashed border-gray-300 dark:border-gray-600 rounded-lg flex items-center justify-center bg-secondary/30">
               {logoPreview ? (
-                <img src={logoPreview} alt="Company Logo" className="max-w-full max-h-full object-contain" />
+                <Image src={logoPreview} alt="Company Logo" width={128} height={128} className="max-w-full max-h-full object-contain" />
               ) : (
                 <div className="text-center text-muted-foreground">
                   <svg className="w-12 h-12 mx-auto mb-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">

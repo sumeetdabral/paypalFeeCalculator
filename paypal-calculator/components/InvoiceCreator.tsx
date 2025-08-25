@@ -5,7 +5,7 @@ import { v4 as uuidv4 } from 'uuid';
 import { addDays, format } from 'date-fns';
 import { Invoice, InvoiceItem, Customer, calculateInvoiceTotals, DEFAULT_PAYMENT_TERMS, DEFAULT_PAYMENT_INSTRUCTIONS } from '@/lib/invoice-types';
 import { InvoiceStorage } from '@/lib/invoice-storage';
-import { CompanySettingsStorage, formatCompanyAddress } from '@/lib/company-settings';
+import { CompanySettingsStorage } from '@/lib/company-settings';
 import { calculatePayPalFees } from '@/lib/calculations';
 import { CURRENCIES, TRANSACTION_TYPES } from '@/lib/constants';
 import InvoicePreview from './InvoicePreview';
@@ -72,7 +72,7 @@ export default function InvoiceCreator({
     return Math.round(quantity * rate * 100) / 100;
   };
 
-  const handleItemChange = (id: string, field: keyof InvoiceItem, value: any) => {
+  const handleItemChange = (id: string, field: keyof InvoiceItem, value: string | number) => {
     setItems(prevItems =>
       prevItems.map(item => {
         if (item.id === id) {
@@ -302,7 +302,7 @@ export default function InvoiceCreator({
               <div>
                 <h3 className="text-lg font-semibold mb-4">Invoice Items</h3>
                 <div className="space-y-3">
-                  {items.map((item, index) => (
+                  {items.map((item) => (
                     <div key={item.id} className="flex gap-2 items-start">
                       <div className="flex-1">
                         <input

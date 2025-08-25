@@ -1,16 +1,11 @@
 import jsPDF from 'jspdf';
 import autoTable from 'jspdf-autotable';
 import { Invoice } from './invoice-types';
+import { CompanySettings } from './company-settings';
 import { format } from 'date-fns';
 import { CURRENCIES } from './constants';
 
-export function generateInvoicePDF(invoice: Invoice, companyInfo?: {
-  name?: string;
-  email?: string;
-  phone?: string;
-  address?: string;
-  logo?: string;
-}): jsPDF {
+export function generateInvoicePDF(invoice: Invoice, companyInfo?: CompanySettings): jsPDF {
   const doc = new jsPDF();
   const pageWidth = doc.internal.pageSize.getWidth();
   const pageHeight = doc.internal.pageSize.getHeight();
@@ -184,7 +179,7 @@ export function generateInvoicePDF(invoice: Invoice, companyInfo?: {
     margin: { left: margin, right: margin },
   });
 
-  yPosition = (doc as any).lastAutoTable.finalY + 10;
+  yPosition = (doc as any).lastAutoTable?.finalY + 10 || yPosition;
 
   const summaryX = pageWidth - margin - 80;
   const summaryItems: Array<[string, string, boolean?]> = [
@@ -290,17 +285,17 @@ export function generateInvoicePDF(invoice: Invoice, companyInfo?: {
   return doc;
 }
 
-export function downloadInvoicePDF(invoice: Invoice, companyInfo?: any): void {
+export function downloadInvoicePDF(invoice: Invoice, companyInfo?: CompanySettings): void {
   const pdf = generateInvoicePDF(invoice, companyInfo);
   pdf.save(`${invoice.invoiceNumber}.pdf`);
 }
 
-export function getInvoicePDFBlob(invoice: Invoice, companyInfo?: any): Blob {
+export function getInvoicePDFBlob(invoice: Invoice, companyInfo?: CompanySettings): Blob {
   const pdf = generateInvoicePDF(invoice, companyInfo);
   return pdf.output('blob');
 }
 
-export function getInvoicePDFDataUri(invoice: Invoice, companyInfo?: any): string {
+export function getInvoicePDFDataUri(invoice: Invoice, companyInfo?: CompanySettings): string {
   const pdf = generateInvoicePDF(invoice, companyInfo);
   return pdf.output('datauristring');
 }

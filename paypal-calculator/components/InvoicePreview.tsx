@@ -6,6 +6,7 @@ import { format } from 'date-fns';
 import { CURRENCIES } from '@/lib/constants';
 import { downloadInvoicePDF } from '@/lib/invoice-pdf';
 import { useEffect, useState } from 'react';
+import Image from 'next/image';
 
 interface InvoicePreviewProps {
   invoice: Invoice;
@@ -57,7 +58,7 @@ export default function InvoicePreview({ invoice, companyInfo }: InvoicePreviewP
             <div className="mt-4 space-y-1 text-sm">
               {currentCompanyInfo.logo && (
                 <div className="mb-3">
-                  <img src={currentCompanyInfo.logo} alt="Company Logo" className="h-12 w-auto" />
+                  <Image src={currentCompanyInfo.logo} alt="Company Logo" width={96} height={48} className="h-12 w-auto" />
                 </div>
               )}
               <p className="font-semibold">{currentCompanyInfo.name}</p>
