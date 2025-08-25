@@ -109,8 +109,8 @@ export default function InvoiceList() {
               <p className="text-sm text-muted-foreground">Total Invoices</p>
               <p className="text-2xl font-bold">{stats.totalInvoices}</p>
             </div>
-            <div className="p-3 bg-blue-100 dark:bg-blue-900/30 rounded-lg">
-              <svg className="w-6 h-6 text-blue-600 dark:text-blue-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <div className="p-3 rounded-lg" style={{backgroundColor: 'var(--blue-600)', '--blue-600': '#2563eb'}}>
+              <svg className="w-6 h-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
               </svg>
             </div>
@@ -123,8 +123,8 @@ export default function InvoiceList() {
               <p className="text-sm text-muted-foreground">Total Amount</p>
               <p className="text-2xl font-bold">${stats.totalAmount.toFixed(2)}</p>
             </div>
-            <div className="p-3 bg-purple-100 dark:bg-purple-900/30 rounded-lg">
-              <svg className="w-6 h-6 text-purple-600 dark:text-purple-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <div className="p-3 rounded-lg" style={{backgroundColor: 'var(--purple-600)', '--purple-600': '#9333ea'}}>
+              <svg className="w-6 h-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
               </svg>
             </div>
@@ -137,8 +137,8 @@ export default function InvoiceList() {
               <p className="text-sm text-muted-foreground">Paid</p>
               <p className="text-2xl font-bold text-green-600 dark:text-green-400">${stats.paidAmount.toFixed(2)}</p>
             </div>
-            <div className="p-3 bg-green-100 dark:bg-green-900/30 rounded-lg">
-              <svg className="w-6 h-6 text-green-600 dark:text-green-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <div className="p-3 rounded-lg" style={{backgroundColor: 'var(--green-600)', '--green-600': '#16a34a'}}>
+              <svg className="w-6 h-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
               </svg>
             </div>
@@ -151,8 +151,8 @@ export default function InvoiceList() {
               <p className="text-sm text-muted-foreground">Overdue</p>
               <p className="text-2xl font-bold text-red-600 dark:text-red-400">${stats.overdueAmount.toFixed(2)}</p>
             </div>
-            <div className="p-3 bg-red-100 dark:bg-red-900/30 rounded-lg">
-              <svg className="w-6 h-6 text-red-600 dark:text-red-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <div className="p-3 rounded-lg" style={{backgroundColor: 'var(--red-600)', '--red-600': '#dc2626'}}>
+              <svg className="w-6 h-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
               </svg>
             </div>
@@ -179,7 +179,7 @@ export default function InvoiceList() {
           <select
             value={statusFilter}
             onChange={(e) => setStatusFilter(e.target.value as Invoice['status'] | 'all')}
-            className="px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
+            className="px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary bg-background text-foreground"
           >
             <option value="all">All Status</option>
             <option value="draft">Draft</option>
@@ -245,7 +245,7 @@ export default function InvoiceList() {
                         <select
                           value={invoice.status}
                           onChange={(e) => handleStatusChange(invoice.id, e.target.value as Invoice['status'])}
-                          className={`px-2 py-1 rounded-full text-xs font-medium ${getInvoiceStatusColor(invoice.status)} border-0 cursor-pointer`}
+                          className={`px-2 py-1 rounded-full text-xs font-medium ${getInvoiceStatusColor(invoice.status)} border-0 cursor-pointer [&>option]:bg-background [&>option]:text-foreground`}
                         >
                           <option value="draft">Draft</option>
                           <option value="sent">Sent</option>

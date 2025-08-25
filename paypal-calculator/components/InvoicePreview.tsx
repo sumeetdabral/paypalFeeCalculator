@@ -39,7 +39,7 @@ export default function InvoicePreview({ invoice, companyInfo }: InvoicePreviewP
   };
 
   return (
-    <div className="bg-white dark:bg-gray-900 rounded-xl shadow-lg overflow-hidden">
+    <div className="bg-card rounded-xl shadow-lg overflow-hidden border">
       <div className="bg-gradient-to-r from-blue-600 to-indigo-600 p-6 text-white">
         <div className="flex justify-between items-start">
           <div>
@@ -78,15 +78,15 @@ export default function InvoicePreview({ invoice, companyInfo }: InvoicePreviewP
       <div className="p-6 space-y-6">
         <div className="grid md:grid-cols-2 gap-6">
           <div>
-            <h3 className="text-sm font-semibold text-gray-500 dark:text-gray-400 mb-2">Bill To</h3>
+            <h3 className="text-sm font-semibold text-muted-foreground mb-2">Bill To</h3>
             <div className="space-y-1">
               <p className="font-semibold">{invoice.customer.name}</p>
-              <p className="text-sm text-gray-600 dark:text-gray-400">{invoice.customer.email}</p>
+              <p className="text-sm text-muted-foreground">{invoice.customer.email}</p>
               {invoice.customer.phone && (
-                <p className="text-sm text-gray-600 dark:text-gray-400">{invoice.customer.phone}</p>
+                <p className="text-sm text-muted-foreground">{invoice.customer.phone}</p>
               )}
               {invoice.customer.address && (
-                <div className="text-sm text-gray-600 dark:text-gray-400 mt-2">
+                <div className="text-sm text-muted-foreground mt-2">
                   {invoice.customer.address.street && <p>{invoice.customer.address.street}</p>}
                   {(invoice.customer.address.city || invoice.customer.address.state || invoice.customer.address.zipCode) && (
                     <p>
@@ -107,7 +107,7 @@ export default function InvoicePreview({ invoice, companyInfo }: InvoicePreviewP
         <div className="overflow-x-auto">
           <table className="w-full">
             <thead>
-              <tr className="border-b-2 border-gray-200 dark:border-gray-700">
+              <tr className="border-b-2 border-border">
                 <th className="text-left py-3 px-2 font-semibold text-sm">Description</th>
                 <th className="text-center py-3 px-2 font-semibold text-sm">Qty</th>
                 <th className="text-right py-3 px-2 font-semibold text-sm">Rate</th>
@@ -116,7 +116,7 @@ export default function InvoicePreview({ invoice, companyInfo }: InvoicePreviewP
             </thead>
             <tbody>
               {invoice.items.map((item) => (
-                <tr key={item.id} className="border-b border-gray-100 dark:border-gray-800">
+                <tr key={item.id} className="border-b border-border/50">
                   <td className="py-3 px-2 text-sm">{item.description}</td>
                   <td className="py-3 px-2 text-sm text-center">{item.quantity}</td>
                   <td className="py-3 px-2 text-sm text-right">
@@ -134,13 +134,13 @@ export default function InvoicePreview({ invoice, companyInfo }: InvoicePreviewP
         <div className="flex justify-end">
           <div className="w-full md:w-80 space-y-2">
             <div className="flex justify-between py-2">
-              <span className="text-sm text-gray-600 dark:text-gray-400">Subtotal</span>
+              <span className="text-sm text-muted-foreground">Subtotal</span>
               <span className="text-sm font-medium">{currencySymbol}{invoice.subtotal.toFixed(2)}</span>
             </div>
             
             {invoice.discountAmount && invoice.discountAmount > 0 && (
               <div className="flex justify-between py-2">
-                <span className="text-sm text-gray-600 dark:text-gray-400">
+                <span className="text-sm text-muted-foreground">
                   Discount ({invoice.discountRate}%)
                 </span>
                 <span className="text-sm font-medium text-red-600">
@@ -151,7 +151,7 @@ export default function InvoicePreview({ invoice, companyInfo }: InvoicePreviewP
             
             {invoice.taxAmount && invoice.taxAmount > 0 && (
               <div className="flex justify-between py-2">
-                <span className="text-sm text-gray-600 dark:text-gray-400">
+                <span className="text-sm text-muted-foreground">
                   Tax ({invoice.taxRate}%)
                 </span>
                 <span className="text-sm font-medium">
@@ -162,14 +162,14 @@ export default function InvoicePreview({ invoice, companyInfo }: InvoicePreviewP
             
             {invoice.paypalFee && invoice.includePaypalFee && (
               <div className="flex justify-between py-2">
-                <span className="text-sm text-gray-600 dark:text-gray-400">PayPal Fee</span>
+                <span className="text-sm text-muted-foreground">PayPal Fee</span>
                 <span className="text-sm font-medium">
                   {currencySymbol}{invoice.paypalFee.toFixed(2)}
                 </span>
               </div>
             )}
             
-            <div className="border-t-2 border-gray-200 dark:border-gray-700 pt-2">
+            <div className="border-t-2 border-border pt-2">
               <div className="flex justify-between">
                 <span className="text-lg font-semibold">Total</span>
                 <span className="text-lg font-bold text-blue-600 dark:text-blue-400">
@@ -181,25 +181,25 @@ export default function InvoicePreview({ invoice, companyInfo }: InvoicePreviewP
         </div>
 
         {(invoice.notes || invoice.terms || invoice.paymentInstructions) && (
-          <div className="space-y-4 pt-4 border-t border-gray-200 dark:border-gray-700">
+          <div className="space-y-4 pt-4 border-t border-border">
             {invoice.notes && (
               <div>
-                <h4 className="text-sm font-semibold text-gray-700 dark:text-gray-300 mb-1">Notes</h4>
-                <p className="text-sm text-gray-600 dark:text-gray-400 whitespace-pre-wrap">{invoice.notes}</p>
+                <h4 className="text-sm font-semibold text-foreground mb-1">Notes</h4>
+                <p className="text-sm text-muted-foreground whitespace-pre-wrap">{invoice.notes}</p>
               </div>
             )}
             
             {invoice.terms && (
               <div>
-                <h4 className="text-sm font-semibold text-gray-700 dark:text-gray-300 mb-1">Terms & Conditions</h4>
-                <p className="text-sm text-gray-600 dark:text-gray-400 whitespace-pre-wrap">{invoice.terms}</p>
+                <h4 className="text-sm font-semibold text-foreground mb-1">Terms & Conditions</h4>
+                <p className="text-sm text-muted-foreground whitespace-pre-wrap">{invoice.terms}</p>
               </div>
             )}
             
             {invoice.paymentInstructions && (
               <div>
-                <h4 className="text-sm font-semibold text-gray-700 dark:text-gray-300 mb-1">Payment Instructions</h4>
-                <p className="text-sm text-gray-600 dark:text-gray-400 whitespace-pre-wrap">{invoice.paymentInstructions}</p>
+                <h4 className="text-sm font-semibold text-foreground mb-1">Payment Instructions</h4>
+                <p className="text-sm text-muted-foreground whitespace-pre-wrap">{invoice.paymentInstructions}</p>
               </div>
             )}
           </div>
@@ -217,7 +217,7 @@ export default function InvoicePreview({ invoice, companyInfo }: InvoicePreviewP
           </button>
           <button
             onClick={handlePrint}
-            className="flex-1 px-4 py-2 border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors flex items-center justify-center gap-2"
+            className="flex-1 px-4 py-2 border border-border text-foreground rounded-lg hover:bg-secondary transition-colors flex items-center justify-center gap-2"
           >
             <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z" />
